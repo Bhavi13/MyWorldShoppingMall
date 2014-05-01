@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.team12.myworld.manager.UserManager;
 import com.team12.myworld.pojos.User;
@@ -74,8 +75,6 @@ public class SignUpServlet extends HttpServlet {
 				RequestDispatcher rd=request.getRequestDispatcher("/jsp/Success.jsp");
 				request.setAttribute("Message","You have signed up successfully.");
 				rd.forward(request, response);
-				
-				
 			}
 			else
 			{
@@ -83,8 +82,33 @@ public class SignUpServlet extends HttpServlet {
 				request.setAttribute("Message","Something went wrong.Please try again");
 				rd.forward(request, response);
 			}
-			
-			
+		}
+		
+		else if(action.equalsIgnoreCase("login"))
+		{
+			String userName = request.getParameter("userName");
+			String passWord = request.getParameter("password");
+
+			User userObj = userManager.login(userName, passWord);
+
+			HttpSession session = request.getSession();
+
+			if(userObj != null)
+			{
+				session.setAttribute("userSeesion", session);
+				session.setAttribute("userId", userName);
+				session.setAttribute("role", userObj.getRole());
+				RequestDispatcher rd = request.getRequestDispatcher("/jsp/HomePage.jsp");
+				rd.forward(request, response);
+				System.out.println("Successful");
+			}
+
+			else
+			{
+				request.setAttribute("errorMsg", "Invalid Username or Password");
+				RequestDispatcher rd = request.getRequestDispatcher("/jsp/Login.jsp");
+				rd.forward(request, response);
+			}
 		}
 		
 	}

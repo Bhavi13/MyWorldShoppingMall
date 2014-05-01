@@ -12,5 +12,12 @@ public class UserManager {
 		boolean flag = userDAO.signUpUser(userInfo);
 		return flag;
 	}
+	
+	public User login(String userId, String passWord)
+	{
+		User userObj = new User();
+		userObj = userDAO.login(userId, passWord);
+		return userObj;
+	}
 
 }

@@ -126,6 +126,12 @@ function validateFun()
 			<td align="center"><input type="submit" name="Submit" value="Submit" align="middle"></td>
 		</tr>
 	</table>
+	<div align="center">
+			<br> 
+			<label id="Message"> 
+			<%if (request.getAttribute("Message") != null) { %><%=request.getAttribute("Message")%> <%} %>
+			</label>
+	</div>
 </form>
 </body>
 </html>
