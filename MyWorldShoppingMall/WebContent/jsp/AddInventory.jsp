@@ -77,7 +77,7 @@
 			<div class="row">
 				<div class="col-lg-10">
 						<fieldset>
-							<legend>Shop Management</legend>
+							<legend>Inventory Management</legend>
 							<ul class="nav nav-tabs" style="margin-bottom: 15px;">
 								<li class="active"><a href="#create" data-toggle="tab">Create</a></li>
 								<li class=""><a href="#update" data-toggle="tab">Update</a></li>
@@ -86,7 +86,7 @@
 							<div id="myTabContent" class="tab-content">
 
 								<div class="tab-pane fade active in" id="create">
-									<form class="form-horizontal" name="createShopForm" id="createShopForm"
+									<form name="addInventoryForm" id="addInventoryShopForm"
 										action="/MyWorldShoppingMall/CreateShopServlet" method="post"
 										onsubmit="return validateFunct();">
 										<input type="hidden" name="action" value="createShop">
@@ -127,7 +127,7 @@
 									</form>
 								</div>
 								<div class="tab-pane fade" id="update">
-									<form class="form-horizontal" name="updateShop" id="updateShopForm"
+									<form name="updateShop" id="updateShopForm"
 										action="/MyWorldShoppingMall/CreateShopServlet" method="post"
 										onsubmit="return validateFunct1();">
 										<input type="hidden" name="action" value="updateShop">
@@ -160,7 +160,7 @@
 									</form>
 								</div>
 								<div class="tab-pane fade" id="delete">
-									<form class="form-horizontal" name="updateShop" id="deleteShopForm"
+									<form name="updateShop" id="deleteShopForm"
 										action="/MyWorldShoppingMall/CreateShopServlet" method="post"
 										onsubmit="return validateFunct2();">
 										<input type="hidden" name="action" value="deleteShop">

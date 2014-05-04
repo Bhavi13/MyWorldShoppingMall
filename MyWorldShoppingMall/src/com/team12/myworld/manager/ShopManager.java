@@ -12,4 +12,16 @@ public class ShopManager {
 		boolean flag = shopDAO.createShop(shopInfo);
 		return flag;
 	}
+	
+	public boolean updateShop(Shop shopInfo)
+	{
+		boolean flag = shopDAO.updateShop(shopInfo);
+		return flag;
+	}
+	
+	public boolean deleteShop(Shop shopInfo)
+	{
+		boolean flag = shopDAO.deleteShop(shopInfo);
+		return flag;
+	}
 }

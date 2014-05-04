@@ -51,7 +51,7 @@ public class CreateShopServlet extends HttpServlet {
 			String category = request.getParameter("category");
 			String description = request.getParameter("description");
 			String approval = "not approved";
-			
+			int userId = 1;
 			Shop shop = new Shop();
 			
 			shop.setShopName(shopName);
@@ -65,6 +65,60 @@ public class CreateShopServlet extends HttpServlet {
 			if(flag == true){
 				RequestDispatcher rd=request.getRequestDispatcher("/jsp/Success.jsp");
 				request.setAttribute("Message","You have successfully created your shop.");
+				rd.forward(request, response);
+				
+				
+			}
+			else
+			{
+				RequestDispatcher rd=request.getRequestDispatcher("/jsp/Success.jsp");
+				request.setAttribute("Message","Something went wrong.Please try again");
+				rd.forward(request, response);
+			}
+		}
+		
+		if(action.equals("updateShop")){
+			boolean flag =false;
+			String shopId = request.getParameter("shopId");
+			String shopName = request.getParameter("updateShopName");
+			String description = request.getParameter("updateDescription");
+			
+			Shop shopInfo = new Shop();
+			shopInfo.setShopId(shopId);
+			shopInfo.setShopName(shopName);
+			shopInfo.setDescription(description);
+			
+			flag = shopManager.updateShop(shopInfo);
+			
+			if(flag == true){
+				RequestDispatcher rd=request.getRequestDispatcher("/jsp/Success.jsp");
+				request.setAttribute("Message","You have successfully updated your shop.");
+				rd.forward(request, response);
+				
+				
+			}
+			else
+			{
+				RequestDispatcher rd=request.getRequestDispatcher("/jsp/Success.jsp");
+				request.setAttribute("Message","Something went wrong.Please try again");
+				rd.forward(request, response);
+			}
+		}
+		
+		if(action.equals("deleteShop")){
+			boolean flag =false;
+			String shopId = request.getParameter("deleteShopId");
+			
+			
+			Shop shopInfo = new Shop();
+			shopInfo.setShopId(shopId);
+			
+			
+			flag = shopManager.deleteShop(shopInfo);
+			
+			if(flag == true){
+				RequestDispatcher rd=request.getRequestDispatcher("/jsp/Success.jsp");
+				request.setAttribute("Message","You have successfully deleted your shop.");
 				rd.forward(request, response);
 				
 				

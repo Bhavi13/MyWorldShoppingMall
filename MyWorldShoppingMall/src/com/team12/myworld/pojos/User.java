@@ -2,19 +2,20 @@ package com.team12.myworld.pojos;
 
 public class User {
 
-	String userId;
+	int userId;
 	String userPassword;
 	String firstName;
 	String lastName;
 	String gender;
 	String emailAddress;
 	String role;
+	int rewardPoints;
 	
 	
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 	public String getUserPassword() {
@@ -52,6 +53,18 @@ public class User {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	/**
+	 * @return the rewardPoints
+	 */
+	public int getRewardPoints() {
+		return rewardPoints;
+	}
+	/**
+	 * @param rewardPoints the rewardPoints to set
+	 */
+	public void setRewardPoints(int rewardPoints) {
+		this.rewardPoints = rewardPoints;
 	}
 
 	

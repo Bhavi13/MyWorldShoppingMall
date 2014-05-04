@@ -7,6 +7,7 @@ public class Shop {
 	private String category;
 	private String description;
 	private String approval;
+	private int userId;
 	/**
 	 * @return the shopId
 	 */
@@ -78,5 +79,17 @@ public class Shop {
 	 */
 	public void setApproval(String approval) {
 		this.approval = approval;
+	}
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }
