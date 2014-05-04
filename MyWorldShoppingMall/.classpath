@@ -14,5 +14,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="library/mysql-connector-java-5.1.30.zip"/>
+	<classpathentry kind="lib" path="library/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
