@@ -1,6 +1,35 @@
+<%@page import="com.team12.myworld.pojos.ShopInventory"%>
+<%@page import="com.team12.myworld.pojos.Item"%>
+<%@page import="com.team12.myworld.pojos.Shop"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.team12.myworld.manager.ShopInvManager"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	int iUserId = 0;//(Integer)session.getAttribute("userId");
+String strUserName = (String)session.getAttribute("userName");
+ShopInvManager sim = new ShopInvManager();
+ArrayList<Shop> alShops = sim.getShops(iUserId);
+ArrayList<Item> alItems = sim.getItems();
+
+ArrayList<ShopInventory> alShopInv = (ArrayList)request.getAttribute("items");
+String msg = (String)request.getAttribute("Message");
+
+if(msg == null){
+	msg = "";
+}
+if(alShopInv == null){
+	alShopInv = new ArrayList();
+}
+if(alShops == null){
+	alShops = new ArrayList();
+}
+if(alItems == null){
+	alItems = new ArrayList();
+}
+
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -54,14 +83,14 @@
 							<legend>Your Shops</legend>
 							<table class="table table-striped table-hover ">
 								<%
-									for (int i = 0; i < 10; i++) {
+									for (int i = 0; i < alShops.size(); i++) {
 								%>
 								<tr>
-									<td>Shop <%=i + 1%></td>
+									<td><%=alShops.get(i).getShopName()%></td>
 								</tr>
 								<%
 									}
-									;
+															;
 								%>
 							</table>
 						</fieldset>
@@ -79,52 +108,59 @@
 						</ul>
 						<div id="myTabContent" class="tab-content">
 							<div class="tab-pane fade active in" id="view">
-								<form class="form-horizontal" name="viewInvnetoryForm" id="viewInventoryForm"
-									action="/MyWorldShoppingMall/CreateShopServlet" method="post"
-									onsubmit="return validateFunct1();">
-									<input type="hidden" name="action" value="viewInventory">
+								<form class="form-horizontal" name="viewInvnetoryForm"
+									id="viewInventoryForm"
+									action="/MyWorldShoppingMall/InvCRUDServlet" method="post">
+									<input type="hidden" name="action" value="listItem">
 									<div class="form-group">
-										<label for="select" class="col-lg-3 control-label">Shop Name:</label>
-										 <div class="col-lg-5">
-										<select
-											class="form-control" name="shopName" id="shopName">
-											<option value="select">--Select Shop--</option>
-											<option value="Category 1">Category 1</option>
-											<option value="Category 2">Category 2</option>
-											<option value="Category 3">Category 3</option>
-											<option value="Category 4">Category 4</option>
-											<option value="Category 5">Category 5</option>
-										</select>
+										<label for="select" class="col-lg-3 control-label">Shop
+											Name:</label>
+										<div class="col-lg-5">
+											<select class="form-control" name="shopName" id="shopName" onchange="this.form.submit()">
+												<option value="select">--Select Shop--</option>
+												<%
+													for (int i = 0; i < alShops.size(); i++) {
+												%>
+												<option value="<%=alShops.get(i).getShopId()%>"><%=alShops.get(i).getShopName()%></option>
+												<%
+													}
+												%>
+											</select>
 										</div>
-									</div><br>
-									
+									</div>
+									<br>
+
 									<table class="table table-striped table-hover ">
 										<thead>
 											<tr>
-												<th>Item Id</th>
 												<th>Item Name</th>
 												<th>Description</th>
-												<th>Category</th>
 												<th>Count</th>
 												<th>Price</th>
 											</tr>
 										</thead>
 										<tbody>
+											<%
+												for(int i = 0; i < alShopInv.size(); i++) {
+											%>
 											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<td><%=alShopInv.get(i).getItemName()%></td>
+												<td><%=alShopInv.get(i).getItemDesc()%></td>
+												<td><%=alShopInv.get(i).getCount()%></td>
+												<td><%=alShopInv.get(i).getPrice()%></td>
 											</tr>
+											<%
+												}
+											%>
+										
 									</table>
 
 								</form>
 							</div>
 							<div class="tab-pane fade" id="add">
-								<form class="form-horizontal" name="addInventoryForm" id="addInventoryForm"
-									action="/MyWorldShoppingMall/CreateShopServlet" method="post"
+								<form class="form-horizontal" name="addInventoryForm"
+									id="addInventoryForm"
+									action="/MyWorldShoppingMall/InvCRUDServlet" method="post"
 									onsubmit="return validateFunct();">
 									<input type="hidden" name="action" value="addInvnentory">
 									<table class="table table-striped table-hover ">
@@ -133,35 +169,39 @@
 											<td><select class="form-control" name="shopName"
 												id="shopName">
 													<option value="select">--Select Shop--</option>
-													<option value="Category 1">Category 1</option>
-													<option value="Category 2">Category 2</option>
-													<option value="Category 3">Category 3</option>
-													<option value="Category 4">Category 4</option>
-													<option value="Category 5">Category 5</option>
+													<%
+														for (int i = 0; i < alShops.size(); i++) {
+													%>
+													<option value="<%=alShops.get(i).getShopId()%>"><%=alShops.get(i).getShopName()%></option>
+													<%
+														}
+													%>
 											</select></td>
 										</tr>
 
 										<tr>
 											<td><label>Item Name:</label><label style="color: red">*</label></td>
 											<td><select class="form-control" name="item" id="item">
-													<option value="select">--Select Item--</option>
-													<option value="Category 1">Category 1</option>
-													<option value="Category 2">Category 2</option>
-													<option value="Category 3">Category 3</option>
-													<option value="Category 4">Category 4</option>
-													<option value="Category 5">Category 5</option>
+													<option value="select">--Select Shop--</option>
+													<%
+														for (int i = 0; i < alItems.size(); i++) {
+													%>
+													<option value="<%=alItems.get(i).getItemId()%>"><%=alItems.get(i).getItemName()%></option>
+													<%
+														}
+													%>
 											</select></td>
 										</tr>
 
 										<tr>
 											<td><label>Count: </label><label style="color: red">*</label></td>
-											<td><input class="form-control" name="description"
-												id="description" type="text"></td>
+											<td><input class="form-control" name="count"
+												id="count" type="text"></td>
 										</tr>
 										<tr>
 											<td><label>Price: </label><label style="color: red">*</label></td>
-											<td><input class="form-control" name="description"
-												id="description" type="text"></td>
+											<td><input class="form-control" name="price"
+												id="price" type="text"></td>
 										</tr>
 
 									</table>
@@ -174,17 +214,39 @@
 								</form>
 							</div>
 							<div class="tab-pane fade" id="delete">
-								<form class="form-horizontal" name="updateShop" id="deleteShopForm"
-									action="/MyWorldShoppingMall/CreateShopServlet" method="post"
-									onsubmit="return validateFunct2();">
+								<form class="form-horizontal" name="updateShop"
+									id="deleteShopForm"
+									action="/MyWorldShoppingMall/InvCRUDServlet" method="post">
 									<input type="hidden" name="action" value="deleteInventory">
 									<table class="table table-striped table-hover ">
 										<tr>
 											<td><label>Shop ID:</label><label style="color: red">*</label></td>
-											<td><input class="form-control" type="text"
-												name="deleteShopId" id="deleteShopId"></td>
+											<td><select class="form-control" name="shopName"
+												id="shopName">
+													<option value="select">--Select Shop--</option>
+													<%
+														for (int i = 0; i < alShops.size(); i++) {
+													%>
+													<option value="<%=alShops.get(i).getShopId()%>"><%=alShops.get(i).getShopName()%></option>
+													<%
+														}
+													%>
+											</select></td>
 										</tr>
-
+										<tr>
+											<td><label>Item Name:</label><label style="color: red">*</label></td>
+											<td><select class="form-control" name="item" id="item">
+													<option value="select">--Select Shop--</option>
+													<%
+														for (int i = 0; i < alItems.size(); i++) {
+													%>
+													<option value="<%=alItems.get(i).getItemId()%>"><%=alItems.get(i).getItemName()%></option>
+													<%
+														}
+													%>
+											</select></td>
+										</tr>
+										
 									</table>
 									<div class="form-group">
 										<div class="col-lg-10 col-lg-offset-10">
